@@ -10,10 +10,93 @@
              Shell.NavBarIsVisible="False"
              x:DataType="handheld:ReceiptViewModel"
              Title="Receipt">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <ContentPage.BindingContext>
+        <handheld:ReceiptViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <Style TargetType="RadioButton">
+            <Setter Property="ControlTemplate"
+                    Value="{StaticResource OptionTemplate}"/>
+        </Style>
+
+        <converters:ByteArrayToImageSourceConverter
+            x:Key="ByteArrayToImageSourceConverter"/>
+        
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="120,180,40,120,120,*,60"
+          RowSpacing="20"
+          ColumnDefinitions="*,*"
+          ColumnSpacing="20"
+          Margin="20"
+          RadioButtonGroup.GroupName="ReceiptOption">
+
+        <VerticalStackLayout VerticalOptions="Center"
+                             Spacing="8"
+                             Grid.ColumnSpan="2">
+            <Label Text="Payment Successful"
+                   Style="{StaticResource LargeTitle}"/>
+            <Label Text="{Binding Order.Total, StringFormat='Your Bill: ${0}'}"/>
+            <BoxView Style="{StaticResource HRule}"/>
+        </VerticalStackLayout>
+
+        <Image Background="White"
+               Grid.Row="1" Grid.ColumnSpan="2"
+               Source="{Binding Order.SignatureData, Mode=OneWay,
+               Converter={StaticResource ByteArrayToImageSourceConverter}}"/>
+
+        <Label Text="How would you like your receipt?"
+               Grid.Row="2"
+               Grid.ColumnSpan="2"
+               HorizontalTextAlignment="Center"/>
+
+        <RadioButton Grid.Row="3" Value="print">
+            <RadioButton.Content>
+                <Label HorizontalTextAlignment="Center" VerticalOptions="Center">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Print" Style="{StaticResource LargeTitle}"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+            </RadioButton.Content>
+        </RadioButton>
+
+        <RadioButton Grid.Row="3" Grid.Column="1" Value="email">
+            <RadioButton.Content>
+                <Label HorizontalTextAlignment="Center" VerticalOptions="Center">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Email" Style="{StaticResource LargeTitle}"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+            </RadioButton.Content>
+        </RadioButton>
+
+        <RadioButton Grid.Row="4" Value="none">
+            <RadioButton.Content>
+                <Label HorizontalTextAlignment="Center" VerticalOptions="Center">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="None" Style="{StaticResource LargeTitle}"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+            </RadioButton.Content>
+        </RadioButton>
+
+        <RadioButton Grid.Row="4" Grid.Column="1" Value="sms">
+            <RadioButton.Content>
+                <Label HorizontalTextAlignment="Center" VerticalOptions="Center">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Email" Style="{StaticResource LargeTitle}"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+            </RadioButton.Content>
+        </RadioButton>
+    </Grid>
 </ContentPage>
