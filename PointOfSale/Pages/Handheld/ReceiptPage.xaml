@@ -92,11 +92,16 @@
                 <Label HorizontalTextAlignment="Center" VerticalOptions="Center">
                     <Label.FormattedText>
                         <FormattedString>
-                            <Span Text="Email" Style="{StaticResource LargeTitle}"/>
+                            <Span Text="Text" Style="{StaticResource LargeTitle}"/>
                         </FormattedString>
                     </Label.FormattedText>
                 </Label>
             </RadioButton.Content>
         </RadioButton>
+
+        <Button Grid.Row="6" Grid.ColumnSpan="2"
+                HorizontalOptions="Fill"
+                Text="Done"
+                Command="{Binding DoneCommand}"/>
     </Grid>
 </ContentPage>
